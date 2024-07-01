@@ -19,6 +19,19 @@ export class UsersService {
     @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
 
+  // private readonly users = [
+  //   {
+  //     userId: 1,
+  //     username: 'john',
+  //     password: 'changeme',
+  //   },
+  //   {
+  //     userId: 2,
+  //     username: 'maria',
+  //     password: 'guess',
+  //   },
+  // ];
+
   findUsers() {
     return this.userRepository.find({ relations: ['profile', 'posts'] });
   }
@@ -77,4 +90,8 @@ export class UsersService {
     });
     return this.postRepository.save(newPost);
   }
+
+  // async findOne(username: string) {
+  //   return this.userRepository.findOneBy({ username });
+  // }
 }

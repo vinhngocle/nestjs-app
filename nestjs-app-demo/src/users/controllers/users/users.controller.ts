@@ -7,7 +7,9 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/guards/auth/auth.guard';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { CreateUserPostDto } from 'src/users/dtos/CreateUserPost.dto';
 import { CreateUserProfileDto } from 'src/users/dtos/CreateUserProfile.dto';
@@ -17,6 +19,8 @@ import { UsersService } from 'src/users/services/users/users.service';
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
+
+  @UseGuards(AuthGuard)
   @Get()
   async getUsers() {
     return await this.userService.findUsers();
