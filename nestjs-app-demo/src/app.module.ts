@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
+import { Profile } from './typeorm/entities/Profile';
 
 @Module({
   imports: [
@@ -14,8 +15,8 @@ import { UsersModule } from './users/users.module';
       username: 'root',
       password: 'root',
       database: 'nestjs_mysql_tutorial',
-      // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      entities: [User],
+      // entities: [__dirname + '../**/*.{.ts,.js}'],
+      entities: [User, Profile],
       synchronize: true,
     }),
     UsersModule,
