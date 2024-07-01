@@ -37,6 +37,7 @@ export class UsersService {
     const users = await this.userRepository.find({
       relations: ['profile', 'posts'],
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const usersWithoutPassword = users.map(({ password: _, ...user }) => user);
     return usersWithoutPassword;
   }
@@ -49,6 +50,7 @@ export class UsersService {
     });
     await this.userRepository.save(newUser);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...usersWithoutPassword } = newUser;
     return usersWithoutPassword;
   }
