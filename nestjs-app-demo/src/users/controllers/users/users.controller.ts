@@ -26,6 +26,7 @@ export class UsersController {
     return await this.userService.findUsers();
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);

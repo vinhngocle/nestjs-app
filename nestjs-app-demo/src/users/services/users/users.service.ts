@@ -10,6 +10,7 @@ import {
   UpdateUserParams,
 } from 'src/users/utils/types';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -32,13 +33,24 @@ export class UsersService {
   //   },
   // ];
 
-  findUsers() {
-    return this.userRepository.find({ relations: ['profile', 'posts'] });
+  async findUsers() {
+    const users = await this.userRepository.find({
+      relations: ['profile', 'posts'],
+    });
+    const usersWithoutPassword = users.map(({ password: _, ...user }) => user);
+    return usersWithoutPassword;
   }
 
-  createUser(userDetails: CreateUserParams) {
-    const newUser = this.userRepository.create({ ...userDetails });
-    return this.userRepository.save(newUser);
+  async createUser(userDetails: CreateUserParams) {
+    const hashPassword = await bcrypt.hash(userDetails.password, 10);
+    const newUser = this.userRepository.create({
+      username: userDetails.username,
+      password: hashPassword,
+    });
+    await this.userRepository.save(newUser);
+
+    const { password: _, ...usersWithoutPassword } = newUser;
+    return usersWithoutPassword;
   }
 
   updateUser(id: number, updateUserDetails: UpdateUserParams) {

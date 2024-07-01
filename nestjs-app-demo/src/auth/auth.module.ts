@@ -14,7 +14,7 @@ import { Post } from 'src/typeorm/entities/Post';
     TypeOrmModule.forFeature([User, Profile, Post]),
     JwtModule.register({
       global: true,
-      secret: 'DO NOT USE THIS VALUE',
+      secret: 'nestjs-app-demo',
       signOptions: { expiresIn: '7d' },
     }),
   ],

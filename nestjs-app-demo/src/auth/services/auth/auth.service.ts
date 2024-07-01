@@ -1,8 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,18 +20,24 @@ export class AuthService {
   async signIn(username: string, pass: string) {
     const user = await this.userRepository.findOneBy({ username });
 
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+    if (!user) {
+      throw new HttpException('User not found.', HttpStatus.BAD_REQUEST);
     }
 
-    const payload = { sub: user.id, username: user.username };
-    const accessToken = await this.jwtService.signAsync(payload);
+    if (user) {
+      const isMatch = await bcrypt.compare(pass, user.password);
+      if (!isMatch) {
+        throw new UnauthorizedException();
+      }
 
-    const { password, ...result } = user;
-    result['access_token'] = accessToken;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
-    console.log(password);
-    return { data: result };
+      const payload = { sub: user.id, username: user.username };
+      const accessToken = await this.jwtService.signAsync(payload);
+      const { password, ...result } = user;
+      result['access_token'] = accessToken;
+
+      return { data: result };
+    }
+
+    return null;
   }
 }
