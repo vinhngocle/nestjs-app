@@ -1,0 +1,9 @@
+# conntect with database (mysql):
+mysql -u <username> -p
+# ex: mysql -u testuser -p
+
+# check database;
+- show databases;
+- use <database-name>;
+- show tables;
+- show columns from <table-name>;
