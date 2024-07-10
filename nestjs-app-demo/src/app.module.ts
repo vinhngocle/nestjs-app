@@ -1,8 +1,11 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UserResolver } from './graphql/resovers/UserResolver';
 import { UserSettingResolver } from './graphql/resovers/UserSettingsResolver';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './graphql/models/User';
+import { UserSetting } from './graphql/models/UserSetting';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -10,8 +13,19 @@ import { UserSettingResolver } from './graphql/resovers/UserSettingsResolver';
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
     }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'graphql_tutorial',
+      entities: [User, UserSetting],
+      synchronize: true,
+    }),
+    UsersModule,
   ],
   controllers: [],
-  providers: [UserResolver, UserSettingResolver],
+  providers: [],
 })
 export class AppModule {}
