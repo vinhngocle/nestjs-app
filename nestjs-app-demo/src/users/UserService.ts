@@ -11,11 +11,16 @@ export class UserService {
   ) {}
 
   getUsers() {
-    return this.usersRepository.find();
+    return this.usersRepository.find({ relations: ['settings'] });
   }
 
   getUserId(id: number) {
-    return this.usersRepository.findOneBy({ id });
+    // return this.usersRepository.findOneBy({ id });
+    /* relation */
+    return this.usersRepository.findOne({
+      where: { id },
+      relations: ['settings'],
+    });
   }
 
   createUser(createUserData: CreateUserInput) {
