@@ -12,5 +12,14 @@ export class User {
   password: string;
 
   @Column({ nullable: true })
-  refreshToken: string;
+  refresh_token: string;
+
+  @Column()
+  first_name: string;
+
+  @Column()
+  last_name: string;
+
+  @Column({ nullable: true })
+  avatar: string;
 }

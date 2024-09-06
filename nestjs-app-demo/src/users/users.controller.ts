@@ -14,7 +14,7 @@ export class UsersController {
   async createUser(@Body() userSaveDto: UserSaveDto, @Res() res: Response) {
     const result = await this.usersService.create(userSaveDto);
     return res.status(HttpStatus.CREATED).json({
-      mess: 'Create successfully.',
+      message: 'Create successfully.',
       data: result,
     });
   }
