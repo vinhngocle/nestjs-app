@@ -34,10 +34,6 @@ export class UsersService {
     return this._usersRepository.findOneBy({ email });
   }
 
-  getUserById(id: number) {
-    return this._usersRepository.findOneBy({ id });
-  }
-
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     await this._usersRepository.update(

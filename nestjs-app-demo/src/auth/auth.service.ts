@@ -9,12 +9,16 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthPayloadDto } from 'src/dtos/auth/AuthPayloadDto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/entity/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userService: UsersService,
+    @InjectRepository(User) private _usersRepository: Repository<User>,
   ) {}
 
   async signIn(authPayloadDto: AuthPayloadDto) {
@@ -38,7 +42,7 @@ export class AuthService {
   }
 
   async refreshTokens(userId: number, refreshToken: string) {
-    const user = await this.userService.getUserById(userId);
+    const user = await this.getUserById(userId);
     const matched = await bcrypt.compare(refreshToken, user.refresh_token);
     if (!user || !matched) {
       throw new ForbiddenException('Access denied');
@@ -48,6 +52,10 @@ export class AuthService {
     await this.userService.updateRefreshToken(userId, newTokens.refreshToken);
 
     return newTokens;
+  }
+
+  getUserById(id: number) {
+    return this._usersRepository.findOneBy({ id });
   }
 
   private async getToken(userId: number, email: string) {
@@ -69,7 +77,7 @@ export class AuthService {
         },
         {
           secret: process.env.JWT_REFRESH_SECRET || 'JWT_REFRESH_SECRET',
-          expiresIn: '7d',
+          expiresIn: '1d',
         },
       ),
     ]);

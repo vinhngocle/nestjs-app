@@ -9,6 +9,7 @@ import { AccessTokenStrategy } from 'src/strategies/access-token.strategy';
 import { RefreshTokenStrategy } from 'src/strategies/refresh-token.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from 'src/strategies/google.strategy';
+import { SessionSerializer } from 'src/strategies/session-serializer';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GoogleStrategy } from 'src/strategies/google.strategy';
     AccessTokenStrategy,
     RefreshTokenStrategy,
     GoogleStrategy,
+    SessionSerializer,
     {
       provide: 'AUTH_SERVICE',
       useClass: AuthService,
