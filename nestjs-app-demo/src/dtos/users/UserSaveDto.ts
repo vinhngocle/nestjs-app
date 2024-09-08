@@ -32,5 +32,8 @@ export class UserSaveDto {
   @IsString()
   last_name: string;
 
+  @ApiProperty({
+    example: null,
+  })
   avatar: string;
 }

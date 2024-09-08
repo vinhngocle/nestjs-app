@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { Category } from './entity/category.entity';
 import { Course } from './entity/course.entity';
 import { CategoriesModule } from './categories/categories.module';
+import { CoursesModule } from './courses/courses.module';
+import { Comment } from './entity/comment.entity';
 
 @Module({
   imports: [
@@ -23,12 +25,13 @@ import { CategoriesModule } from './categories/categories.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.APP_NAME,
-      entities: [User, Category, Course],
+      entities: [User, Category, Course, Comment],
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
     CategoriesModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

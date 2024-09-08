@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { BaseTime } from './base-time.entity';
+import { Comment } from './comment.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseTime {
@@ -23,4 +30,8 @@ export class User extends BaseTime {
 
   @Column({ nullable: true })
   avatar: string;
+
+  @ManyToMany(() => Comment)
+  @JoinTable()
+  comments: Comment[];
 }
