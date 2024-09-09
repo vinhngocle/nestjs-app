@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   OneToOne,
+  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { BaseTime } from './base-time.entity';
 import { Category } from './category.entity';
@@ -34,7 +36,7 @@ export class Course extends BaseTime {
   @Column()
   status: number;
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category, (category) => category.courses)
   @JoinColumn()
   category: Category;
 }

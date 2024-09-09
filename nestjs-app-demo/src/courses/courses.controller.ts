@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpStatus,
   Param,
   Post,
@@ -20,6 +21,28 @@ import { Response } from 'express';
 @Controller('courses')
 export class CoursesController {
   constructor(private coursesService: CoursesService) {}
+
+  @UseGuards(AccessTokenGuard)
+  @ApiOperation({ summary: 'Get all list courses' })
+  @Get()
+  async fetchAll(@Res() res: Response) {
+    const result = await this.coursesService.getAll();
+    res.status(HttpStatus.OK).json({
+      message: 'Get all course successfully.',
+      data: result,
+    });
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @ApiOperation({ summary: 'Get detail courses by id' })
+  @Get(':id')
+  async fetchById(@Param('id') id: number, @Res() res: Response) {
+    const result = await this.coursesService.getCourseById(id);
+    res.status(HttpStatus.OK).json({
+      message: 'Get course by id successfully.',
+      data: result,
+    });
+  }
 
   @UseGuards(AccessTokenGuard)
   @ApiOperation({ summary: 'Create new courses' })

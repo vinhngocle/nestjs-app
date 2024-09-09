@@ -17,6 +17,10 @@ export class CoursesService {
     const category = await this.categoriesService.getCategoryById(
       courseSaveDto.category_id,
     );
+    if (!category) {
+      throw new HttpException('Category not found', HttpStatus.BAD_REQUEST);
+    }
+
     const course = await this._courseRepository.create({
       ...courseSaveDto,
       category,
@@ -25,11 +29,14 @@ export class CoursesService {
   }
 
   async getAll() {
-    return await this._courseRepository.find();
+    return await this._courseRepository.find({ relations: ['category'] });
   }
 
   async getCourseById(courseId: number) {
-    return await this._courseRepository.findOneBy({ id: courseId });
+    return await this._courseRepository.findOne({
+      where: { id: courseId },
+      relations: ['category'],
+    });
   }
 
   async update(courseId: number, courseSaveDto: CourseSaveDto) {
@@ -41,7 +48,9 @@ export class CoursesService {
     const category = await this.categoriesService.getCategoryById(
       courseSaveDto.category_id,
     );
-    console.log(category);
+    if (!category) {
+      throw new HttpException('Category not found', HttpStatus.BAD_REQUEST);
+    }
 
     const form = {
       order: courseSaveDto.order,

@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { BaseTime } from './base-time.entity';
+import { Course } from './course.entity';
 
 @Entity({ name: 'categories' })
 export class Category extends BaseTime {
@@ -11,4 +12,7 @@ export class Category extends BaseTime {
 
   @Column()
   sub_category: string;
+
+  @OneToMany(() => Course, (course) => course.category)
+  courses: Course[];
 }
