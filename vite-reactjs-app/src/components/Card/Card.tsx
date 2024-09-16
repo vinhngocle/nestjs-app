@@ -28,13 +28,16 @@ function Card({ product }: CardProps) {
               {product.title}
             </h5>
           </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-4">
-            {product.description}
-          </p>
+          <div className="flex flex-row space-x-24">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-4">
+              {product.description}
+            </p>
+            <p>46 hours</p>
+          </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
             <div className="bg-blue-600 h-2.5 rounded-full w-[45%]"></div>
-            <p className="mb-4">0% Complete</p>
           </div>
+          <p className="mt-4 text-[#4099bf] font-bold">0% Complete</p>
         </div>
       </div>
     </div>

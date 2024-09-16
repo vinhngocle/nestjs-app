@@ -1,0 +1,62 @@
+import { ReactNode, useState } from "react";
+import TabPanel from "./TabPanel";
+
+interface Tab {
+  id: string;
+  label: string;
+  content: ReactNode;
+}
+
+interface TabProps {
+  tabs: Tab[];
+  children: ReactNode;
+}
+
+function Tab({ tabs, children }: TabProps) {
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId);
+  };
+
+  return (
+    <div className="p-6">
+      <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <ul
+          className="flex flex-wrap -mb-px text-sm font-medium text-center"
+          role="tablist"
+        >
+          {tabs.map((tab) => (
+            <li key={tab.id} className="me-2" role="presentation">
+              <button
+                className={`inline-block p-4 border-b-2 rounded-t-lg ${
+                  activeTab === tab.id
+                    ? "border-blue-500"
+                    : "border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                }`}
+                onClick={() => handleTabClick(tab.id)}
+                id={`${tab.id}-tab`}
+                type="button"
+                role="tab"
+                aria-controls={tab.id}
+                aria-selected={activeTab === tab.id}
+              >
+                {tab.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        {tabs.map((tab) => (
+          <TabPanel key={tab.id} tabId={tab.id} activeTab={activeTab}>
+            {tab.content}
+          </TabPanel>
+        ))}
+      </div>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+export default Tab;
