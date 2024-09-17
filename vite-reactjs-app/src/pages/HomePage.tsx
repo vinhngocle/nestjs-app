@@ -4,6 +4,7 @@ import Tab from "../components/Tab/Tab";
 import { tabsData } from "../__mocks__/tabs.tsx";
 import MySwiper from "../components/Swiper/Swiper.tsx";
 import { productsData } from "../__mocks__/products.js";
+import Footer from "../components/Footer/Footer.tsx";
 
 function HomePage() {
   return (
@@ -14,9 +15,8 @@ function HomePage() {
       {/* <div className="flex justify-center">
         <CardList cards={productsData} />
       </div> */}
-      <Tab tabs={tabsData}>
-        <MySwiper cards={productsData} />
-      </Tab>
+      <Tab tabs={tabsData} />
+      <Footer />
     </div>
   );
 }

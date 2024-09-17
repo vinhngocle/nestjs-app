@@ -1,18 +1,26 @@
 import { ReactNode, useState } from "react";
 import TabPanel from "./TabPanel";
+import MySwiper from "../Swiper/Swiper";
+
+interface Product {
+  image: string;
+  title: string;
+  description: string;
+  category: string;
+}
 
 interface Tab {
   id: string;
   label: string;
   content: ReactNode;
+  courses?: Product[];
 }
 
 interface TabProps {
   tabs: Tab[];
-  children: ReactNode;
 }
 
-function Tab({ tabs, children }: TabProps) {
+function Tab({ tabs }: TabProps) {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   const handleTabClick = (tabId: string) => {
@@ -50,11 +58,11 @@ function Tab({ tabs, children }: TabProps) {
       <div>
         {tabs.map((tab) => (
           <TabPanel key={tab.id} tabId={tab.id} activeTab={activeTab}>
-            {tab.content}
+            <div>{tab.content}</div>
+            {tab.courses && <MySwiper cards={tab.courses} />}
           </TabPanel>
         ))}
       </div>
-      <div>{children}</div>
     </div>
   );
 }

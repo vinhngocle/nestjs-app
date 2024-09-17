@@ -59,15 +59,18 @@ function Navbar() {
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                 <Link to="/">
-                  <img
-                    className="h-8 w-auto"
-                    src="/mark.svg"
-                    alt="Your Company"
-                  />
+                  <p className="flex justify-center items-center">
+                    <img
+                      className="h-8 w-auto"
+                      src="/mark.svg"
+                      alt="Your Company"
+                    />
+                    {/* <span className="text-xl m-2 text-gray-300">Udemy</span> */}
+                  </p>
                 </Link>
               </div>
               <div className=" sm:ml-6 sm:block">
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 justify-center items-center">
                   {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                   {/* <div
                     className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
