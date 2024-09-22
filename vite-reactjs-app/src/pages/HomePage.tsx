@@ -1,9 +1,9 @@
-import React from "react";
+// import React from "react";
 // import CardList from "../components/Card/CardList";
 import Tab from "../components/Tab/Tab";
 import { tabsData } from "../__mocks__/tabs.tsx";
-import MySwiper from "../components/Swiper/Swiper.tsx";
-import { productsData } from "../__mocks__/products.js";
+// import MySwiper from "../components/Swiper/Swiper.tsx";
+// import { productsData } from "../__mocks__/products.js";
 import Footer from "../components/Footer/Footer.tsx";
 
 function HomePage() {

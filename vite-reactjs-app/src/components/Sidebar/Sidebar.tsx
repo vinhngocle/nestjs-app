@@ -129,7 +129,7 @@ function Sidebar() {
           <ul className="space-y-2 font-medium">
             <li>
               <a
-                href="#"
+                href="/admin"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -538,6 +538,11 @@ function Sidebar() {
               </p>
             </div>
           </div>
+        </div>
+      </div> */}
+      {/* <div className="p-4 sm:ml-64">
+        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+          abc
         </div>
       </div> */}
     </div>
