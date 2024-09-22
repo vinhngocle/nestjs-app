@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout.tsx";
 import Login from "./components/Login/Login.tsx";
 import Register from "./components/Register/Register.tsx";
+import DashboardPage from "./pages/admin/DashboardPage.tsx";
+import CoursePage from "./pages/admin/CoursePage.tsx";
+import LayoutAdmin from "./components/LayoutAdmin.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,20 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/admin",
+    element: <LayoutAdmin />,
+    children: [
+      {
+        path: "",
+        element: <DashboardPage />,
+      },
+      {
+        path: "course",
+        element: <CoursePage />,
+      },
+    ],
   },
 ]);
 
