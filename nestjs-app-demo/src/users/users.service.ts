@@ -45,4 +45,12 @@ export class UsersService {
       },
     );
   }
+
+  async getCurrentUser(userId: number) {
+    const user = await this._usersRepository.findOneBy({ id: userId });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, refresh_token, ...profileUser } = user;
+
+    return profileUser;
+  }
 }
