@@ -4,11 +4,13 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout.tsx";
-import Login from "./components/Login/Login.tsx";
-import Register from "./components/Register/Register.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 import DashboardPage from "./pages/admin/DashboardPage.tsx";
 import CoursePage from "./pages/admin/CoursePage.tsx";
 import LayoutAdmin from "./components/LayoutAdmin.tsx";
+import { Provider } from "react-redux";
+import store from "./store.ts";
 
 const router = createBrowserRouter([
   {
@@ -19,31 +21,15 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
       },
-      // {
-      //   path: "/product",
-      //   element: <ProductPage />,
-      // },
-      // {
-      //   path: "/cart",
-      //   element: <CartPage />,
-      // },
-      // {
-      //   path: "/book",
-      //   element: <BookPage />,
-      // },
-      // {
-      //   path: "/post",
-      //   element: <PostPage />,
-      // },
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
   },
   {
     path: "/register",
-    element: <Register />,
+    element: <RegisterPage />,
   },
   {
     path: "/admin",
@@ -64,6 +50,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {/* <App /> */}
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );

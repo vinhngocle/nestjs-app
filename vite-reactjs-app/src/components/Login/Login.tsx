@@ -1,6 +1,17 @@
-import React from "react";
+interface LoginProp {
+  handleStateChange: (field: string, value: string) => void;
+  handleLogin: () => void;
+}
 
-function Login() {
+function Login({ handleStateChange, handleLogin }: LoginProp) {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  // const handleLogin = () => {
+  //   console.log(email);
+  //   console.log(password);
+  // };
+
   return (
     // <div className="w-full max-w-xs">
     <div className="flex flex-col justify-center items-center mt-[150px]">
@@ -18,6 +29,7 @@ function Login() {
             id="email"
             type="text"
             placeholder="Enter your email"
+            onChange={(e) => handleStateChange("email", e.target.value)}
           />
         </div>
         <div className="pl-2 pr-2">
@@ -32,6 +44,7 @@ function Login() {
             id="password"
             type="password"
             placeholder="Enter your assword"
+            onChange={(e) => handleStateChange("password", e.target.value)}
           />
         </div>
         <a
@@ -44,6 +57,7 @@ function Login() {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full pl-2 pr-2"
             type="button"
+            onClick={handleLogin}
           >
             Log In
           </button>
