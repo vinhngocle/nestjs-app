@@ -1,6 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
+import { useEffect } from "react";
+import { getUser } from "../../slices/authSlice";
 
 function Navbar() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const basicUserInfo = useAppSelector(
+    (state) => state.authReducer.basicUserInfo
+  );
+  const userProfileInfo = useAppSelector(
+    (state) => state.authReducer.userProfileData
+  );
+
+  useEffect(() => {
+    if (basicUserInfo) {
+      dispatch(getUser());
+    }
+  }, [basicUserInfo, dispatch]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    const userInfo = localStorage.getItem("userInfo");
+    if (!userInfo) {
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <nav className="bg-gray-800">
@@ -179,9 +206,15 @@ function Navbar() {
                     className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
                   >
                     <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                      <div>Bonnie Green</div>
+                      <div>
+                        <span>
+                          {userProfileInfo?.first_name +
+                            " " +
+                            userProfileInfo?.last_name}
+                        </span>
+                      </div>
                       <div className="font-medium truncate">
-                        name@flowbite.com
+                        {userProfileInfo?.email}
                       </div>
                     </div>
                     <ul
@@ -215,8 +248,8 @@ function Navbar() {
                     </ul>
                     <div className="py-2">
                       <a
-                        href="#"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={handleLogout}
                       >
                         Sign out
                       </a>

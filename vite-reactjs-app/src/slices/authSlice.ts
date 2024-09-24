@@ -59,6 +59,11 @@ export const register = createAsyncThunk("register", async (data: NewUser) => {
   return resData;
 });
 
+export const getUser = createAsyncThunk("users/profile", async () => {
+  const response = await axiosInstance.get(`/users/profile`);
+  return response.data.data;
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -95,6 +100,18 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Registration failed";
+      })
+      .addCase(getUser.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.userProfileData = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Get user profile data failed";
       });
   },
 });
